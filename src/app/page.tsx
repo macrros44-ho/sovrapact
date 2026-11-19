@@ -15,13 +15,12 @@ const POLAR_CHECKOUT_URL =
 const POLAR_ORG_ID = "3851acd2-8bdb-481e-a441-00c674baad5a";
 
 export default function SovraPactPage() {
+  // 기본 입력 상태 (Free)
   const [providerName, setProviderName] = useState("Alex Rivera Studio");
   const [providerEmail, setProviderEmail] = useState("alex@riverastudio.com");
   const [clientName, setClientName] = useState("Acme Corp");
   const [projectTitle, setProjectTitle] = useState("Website Redesign & Webflow Build");
-  const [effectiveDate, setEffectiveDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [effectiveDate, setEffectiveDate] = useState("");
   const [deliverables, setDeliverables] = useState(
     "1. UI/UX Wireframes & High-Fidelity Figma Designs (up to 5 pages)\n2. Responsive Frontend Development & CMS Setup\n3. Basic On-Page SEO & Speed Optimization"
   );
@@ -31,6 +30,7 @@ export default function SovraPactPage() {
     "50% upfront deposit ($2,250), 50% upon final delivery prior to launch."
   );
 
+  // Pro 기능 입력 상태 ($24 단건 결제 잠금 해제)
   const [includedRevisions, setIncludedRevisions] = useState("2");
   const [extraRevisionRate, setExtraRevisionRate] = useState("150");
   const [ipTransferRule, setIpTransferRule] = useState(
@@ -38,12 +38,14 @@ export default function SovraPactPage() {
   );
   const [killFeePercent, setKillFeePercent] = useState("25");
 
+  // 라이선스 인증 상태
   const [isPro, setIsPro] = useState(false);
   const [licenseKey, setLicenseKey] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
+    setEffectiveDate(new Date().toISOString().split("T")[0]);
     const savedKey = localStorage.getItem("sovrapact_pro_key");
     if (savedKey) {
       setLicenseKey(savedKey);
@@ -100,6 +102,7 @@ export default function SovraPactPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* 상단 네비게이션 (인쇄 시 숨김) */}
       <header className="bg-white border-b border-slate-200 px-6 py-4 print:hidden">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
@@ -139,8 +142,11 @@ export default function SovraPactPage() {
         </div>
       </header>
 
+      {/* 메인 에디터 + 실시간 미리보기 */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 print:p-0 print:block">
+        {/* 좌측 입력 패널 (인쇄 시 숨김) */}
         <section className="lg:col-span-5 space-y-6 print:hidden">
+          {/* 라이선스 키 입력 박스 */}
           {!isPro && (
             <div className="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
@@ -169,6 +175,7 @@ export default function SovraPactPage() {
             </div>
           )}
 
+          {/* 기본 정보 입력 (Free) */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <h2 className="font-bold text-base text-slate-800 border-b pb-2">
               1. Core Project Details (Free)
@@ -286,6 +293,7 @@ export default function SovraPactPage() {
             </div>
           </div>
 
+          {/* Pro 보호 조항 입력 ($24 잠금) */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 relative">
             <div className="flex items-center justify-between border-b pb-2">
               <h2 className="font-bold text-base text-slate-800 flex items-center gap-1.5">
@@ -371,9 +379,11 @@ export default function SovraPactPage() {
           </div>
         </section>
 
+        {/* 우측 A4 문서 미리보기 (인쇄 시 이 영역만 출력됨) */}
         <section className="lg:col-span-7 print:w-full">
           <div className="bg-white border border-slate-200 shadow-md rounded-xl p-10 min-h-[842px] flex flex-col justify-between print:shadow-none print:border-none print:p-0">
             <div className="space-y-6">
+              {/* 문서 헤더 */}
               <div className="border-b-2 border-slate-900 pb-4 flex justify-between items-start">
                 <div>
                   <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 uppercase">
@@ -385,7 +395,7 @@ export default function SovraPactPage() {
                 </div>
                 <div className="text-right text-xs text-slate-600">
                   <p>
-                    <strong>Effective Date:</strong> {effectiveDate}
+                    <strong>Effective Date:</strong> {effectiveDate || "—"}
                   </p>
                   <p>
                     <strong>Status:</strong> Final Proposal
@@ -393,6 +403,7 @@ export default function SovraPactPage() {
                 </div>
               </div>
 
+              {/* 당사자 정보 */}
               <div className="grid grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200 text-sm">
                 <div>
                   <p className="text-xs uppercase font-bold text-slate-400">
@@ -407,6 +418,7 @@ export default function SovraPactPage() {
                 </div>
               </div>
 
+              {/* 1. 작업 범위 */}
               <div className="space-y-1.5">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
                   1. Scope of Services & Deliverables
@@ -416,6 +428,7 @@ export default function SovraPactPage() {
                 </p>
               </div>
 
+              {/* 2. 일정 및 비용 */}
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="space-y-1">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
@@ -434,6 +447,7 @@ export default function SovraPactPage() {
                 </div>
               </div>
 
+              {/* Pro 전용 조항 출력 영역 */}
               {isPro ? (
                 <div className="space-y-4 pt-2 border-t border-slate-200 text-sm">
                   <div>
@@ -472,6 +486,7 @@ export default function SovraPactPage() {
                     </p>
                   </div>
 
+                  {/* 서명란 */}
                   <div className="pt-8 grid grid-cols-2 gap-8">
                     <div className="border-t border-slate-400 pt-2">
                       <p className="text-xs font-bold text-slate-800">
@@ -505,6 +520,7 @@ export default function SovraPactPage() {
               )}
             </div>
 
+            {/* 하단 워터마크 및 면책조항 */}
             <div className="pt-8 mt-8 border-t border-slate-200 text-[11px] text-slate-400 flex flex-col gap-1">
               <p>
                 Disclaimer: This document is generated for informational purposes and
