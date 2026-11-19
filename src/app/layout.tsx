@@ -5,18 +5,16 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SlipMint — Free Instant Invoice & PDF Generator for Freelancers",
-  description: "Create and download clean, client-ready PDF invoices instantly in your browser. No sign-up required.",
-  verification: {
-    google: "xpk4OFhW2_6GiTjq4qZIM2rYh0Kz4dl2Qu4bANzXDeE",
-  },
-  openGraph: {
-    title: "SlipMint — Free Instant Invoice & PDF Generator for Freelancers",
-    description: "Create and download clean, client-ready PDF invoices instantly in your browser. No sign-up required.",
-    url: "https://slipmint.vercel.app",
-    siteName: "SlipMint",
-    type: "website",
-  },
+  title: "SovraPact — Instant Freelance Scope of Work (SOW) & Agreement Generator",
+  description:
+    "Generate legally structured Scope of Work (SOW) PDFs in 60 seconds. Protect against scope creep, define IP ownership, and secure client sign-off fast.",
+  keywords: [
+    "freelance scope of work generator",
+    "SOW template PDF",
+    "freelance contract generator",
+    "scope creep protection",
+    "agency proposal generator",
+  ],
 };
 
 export default function RootLayout({
@@ -26,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-slate-50 text-slate-900 antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
